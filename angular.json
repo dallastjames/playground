@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "testapp",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "testapp": {
+      "projectType": "application",
+      "root": "apps/testapp",
+      "sourceRoot": "apps/testapp/src",
+      "prefix": "playground",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/testapp",
+            "index": "apps/testapp/src/index.html",
+            "main": "apps/testapp/src/main.ts",
+            "polyfills": "apps/testapp/src/polyfills.ts",
+            "tsConfig": "apps/testapp/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/testapp/src/favicon.ico",
+              "apps/testapp/src/assets"
+            ],
+            "styles": ["apps/testapp/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/testapp/src/environments/environment.ts",
+                  "with": "apps/testapp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "testapp:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "testapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "testapp:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/testapp/src/**/*.ts",
+              "apps/testapp/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/testapp"],
+          "options": {
+            "jestConfig": "apps/testapp/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "testapp-e2e": {
+      "root": "apps/testapp-e2e",
+      "sourceRoot": "apps/testapp-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/testapp-e2e/cypress.json",
+            "tsConfig": "apps/testapp-e2e/tsconfig.e2e.json",
+            "devServerTarget": "testapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "testapp:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/testapp-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
