@@ -1,30 +1,26 @@
 {
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "implicitDependencies": {
+        "package.json": { "dependencies": "*", "devDependencies": "*" },
+        ".eslintrc.json": "*"
     },
-    ".eslintrc.json": "*"
-  },
-  "affected": {
-    "defaultBase": "master"
-  },
-  "npmScope": "playground",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
-    }
-  },
-  "projects": {
-    "testapp": {
-      "tags": []
+    "affected": { "defaultBase": "master" },
+    "npmScope": "playground",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/nx-cloud",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "accessToken": "ZDIwMmFiOGYtMzQ0Yi00NWZmLWFlYTItMTExZmExMDRhNzBhfHJlYWQtd3JpdGU=",
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true
+            }
+        }
     },
-    "testapp-e2e": {
-      "tags": [],
-      "implicitDependencies": ["testapp"]
+    "projects": {
+        "testapp": { "tags": [] },
+        "testapp-e2e": { "tags": [], "implicitDependencies": ["testapp"] },
+        "testapp-api": { "tags": [] },
+        "awesome": { "tags": [] },
+        "awesome-e2e": { "tags": [], "implicitDependencies": ["awesome"] }
     }
-  }
 }

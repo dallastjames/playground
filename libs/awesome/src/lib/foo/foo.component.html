@@ -1,0 +1,5 @@
+<button type="button" (click)="createBar()">Hey! I'm a {{ label }}</button>
+<hr />
+<ng-container *ngIf="barRef | async as bar">
+    <ng-template [ngComponentOutlet]="bar"></ng-template>
+</ng-container>
